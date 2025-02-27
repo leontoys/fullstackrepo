@@ -6,7 +6,10 @@ import viteLogo from '/vite.svg'
 import { useState } from "react";
 import ReactDOM from "react-dom/client"
 import { createRoot } from 'react-dom/client'
-
+import {
+  BrowserRouter as Router,
+  Routes, Route, Link
+} from 'react-router-dom'
 
 //create components
 const Home = ()=> (
@@ -21,72 +24,32 @@ const Users = ()=>(
   <div><h2>Users</h2></div>
 )
 
-const App = ()=>{
 
-  //just a state for page
-  const [page,setPage] = useState('home')
-
-  const toPage = (page) => (event) => {
-    event.preventDefault()
-    setPage(page)
-  }
-
-  const content = () => {
-    if(page==='home'){
-      return <Home/>
-    }
-    else if(page==='notes'){
-      return <Notes/>
-    }
-    else if(page==='users'){
-      return <Users/>
-    }
-  }
+const App = () => {
 
   const padding = {
-    padding : 5
+    padding: 5
   }
 
-  return(
-    <div>
-      <div>
-        <a href="" onClick={toPage('home')} style={padding}>home</a>
-        <a href="" onClick={toPage('notes')} style={padding}>notes</a>
-        <a href="" onClick={toPage('users')} style={padding}>users</a>
-        {content()}
-      </div>
-    </div>
-  )
-
-}
-
-/* function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <Router>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <Link style={padding} to="/">home</Link>
+        <Link style={padding} to="/notes">notes</Link>
+        <Link style={padding} to="/users">users</Link>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+      <Routes>
+        <Route path="/notes" element={<Notes />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/" element={<Home />} />
+      </Routes>
+
+      <div>
+        <i>Note app, Department of Computer Science 2024</i>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </Router>
   )
-} */
+}
 
 export default App
